@@ -1,0 +1,15 @@
+{
+  "name": "rdv-consultants",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Créneaux libres des consultants et RDV Outlook (titre, Teams, admin commerce) en un clic.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "build": "node scripts/build.mjs"
+  },
+  "dependencies": {
+    "@azure/msal-browser": "5.30.0",
+    "esbuild": "0.24.2"
+  }
+}

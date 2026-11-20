@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>RDV consultants</title>
+<meta name="description" content="Créneaux libres des consultants et RDV Outlook en un clic.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='1.5' y='2.5' width='13' height='12' rx='2' fill='%23fff' stroke='%230b5cab' stroke-width='1.5'/%3E%3Crect x='1.5' y='2.5' width='13' height='4' rx='1' fill='%230b5cab'/%3E%3Ccircle cx='8' cy='10.5' r='2' fill='%232e844a'/%3E%3C/svg%3E">
+<style>
+  :root { --ink:#181818; --muted:#5c5c5c; --line:#e3e3e0; --bg:#f4f3ef; --card:#fff; --accent:#0b5cab; --green:#2e844a; --green-bg:#eaf5ec; --orange:#a95b00; --red:#b42318; }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+  #app { max-width: 980px; margin: 0 auto; padding: 24px 16px 64px; }
+  header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+  .logo { width: 18px; height: 18px; border-radius: 4px; border: 2px solid var(--accent); background: linear-gradient(var(--accent) 0 32%, #fff 0); flex: none; }
+  h1 { font-size: 22px; margin: 0; letter-spacing: -.3px; }
+  h2 { font-size: 17px; margin: 0 0 10px; }
+  h3 { font-size: 14px; margin: 20px 0 8px; }
+  .sp { flex: 1; }
+  .badge { font-size: 12px; font-weight: 600; color: var(--orange); background: #fff4e5; border: 1px solid #f3d3a6; border-radius: 12px; padding: 1px 9px; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .pad { padding: 18px 4px; }
+  .err { color: var(--red); font-size: 13px; margin: 6px 0; }
+  .err:empty { display: none; }
+  .warn-txt { color: var(--orange); font-size: 13px; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-top: 14px; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 12px 0 0; }
+  input[type=text], input[type=email], input[type=time], select { font: inherit; font-size: 14px; padding: 7px 10px; border: 1px solid #c9c9c9; border-radius: 8px; background: #fff; color: var(--ink); min-width: 0; }
+  input:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(11,92,171,.15); }
+  button { font: inherit; }
+  .primary { display: inline-block; font-weight: 600; font-size: 14px; background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: 9px 16px; cursor: pointer; text-decoration: none; }
+  .primary:disabled { opacity: .6; cursor: default; }
+  .secondary { display: inline-block; font-size: 13px; border: 1px solid #c9c9c9; background: #fff; color: var(--accent); border-radius: 8px; padding: 7px 12px; cursor: pointer; text-decoration: none; }
+  .link { border: 0; background: none; color: var(--accent); cursor: pointer; font-size: 13px; padding: 4px 2px; }
+  .link:hover { text-decoration: underline; }
+  .field { display: inline-flex; flex-direction: column; gap: 3px; font-size: 13px; color: var(--muted); }
+  .field.wide { display: flex; margin-top: 10px; }
+  .field.wide input { width: 100%; }
+  footer { margin-top: 28px; text-align: center; }
+  .bm { display: inline-flex; align-items: center; font-weight: 700; background: var(--ink); color: #fff; text-decoration: none; padding: 8px 16px; border-radius: 8px; cursor: grab; }
+  .settings > div > .muted { margin-top: 6px; }
+
+  /* réglages */
+  .settings input[type=email], .settings > input[type=text] { width: min(100%, 420px); }
+  .cals { display: grid; gap: 6px; }
+  .cal { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; }
+  .cal input { align-self: center; }
+
+  /* client */
+  .client .who { display: grid; grid-template-columns: 130px 1fr; gap: 8px; }
+
+  /* créneaux */
+  .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .days { display: flex; flex-wrap: wrap; gap: 6px; }
+  .day { flex: none; display: flex; flex-direction: column; align-items: center; min-width: 78px; padding: 6px 8px; border: 1px solid var(--line); background: #fff; border-radius: 8px; cursor: pointer; color: var(--ink); }
+  .day span { font-size: 12px; color: var(--green); }
+  .day:disabled { cursor: default; opacity: .5; }
+  .day:disabled span { color: var(--muted); }
+  .day.on { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); background: #f1f6fc; }
+  .gridwrap { margin-top: 10px; overflow-x: auto; }
+  .grid { border-collapse: collapse; width: 100%; font-size: 14px; }
+  .grid th { position: sticky; top: 0; background: #fff; text-align: left; font-size: 13px; padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .grid td { padding: 3px 8px; border-bottom: 1px solid #f0f0ed; white-space: nowrap; }
+  .grid td.t { font-variant-numeric: tabular-nums; font-weight: 600; width: 70px; }
+  .grid td.busy { color: #b8b8b4; padding-left: 20px; }
+  .grid tr.full td.t { color: #b8b8b4; }
+  .free { font-size: 13px; font-weight: 600; color: var(--green); background: var(--green-bg); border: 1px solid #c4e2ca; border-radius: 6px; padding: 3px 14px; cursor: pointer; }
+  .free:hover { border-color: var(--green); }
+  .free.on { background: var(--green); color: #fff; border-color: var(--green); }
+
+  /* confirmation */
+  .sheet { position: sticky; bottom: 12px; background: #fff; border: 1px solid #c9c9c9; border-radius: 12px; padding: 14px 18px; margin-top: 14px; box-shadow: 0 6px 24px rgba(0,0,0,.12); }
+  .sheet .when { font-size: 15px; }
+  .done .ok { color: var(--green); font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+
+  @media (max-width: 560px) {
+    .client .who { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main id="app"><p class="muted">Chargement…</p></main>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Jeanne DUPONT | Piste | Salesforce (fausse fiche de test)</title>
+<style>
+  body { font: 13px Arial, sans-serif; background: #b0c4df; margin: 0; padding: 40px 20px; }
+  .record { background: #fff; border-radius: 4px; padding: 16px; max-width: 700px; }
+  .slds-form-element { display: grid; grid-template-columns: 200px 1fr; border-bottom: 1px solid #ddd; padding: 6px 0; }
+  .slds-form-element__label { color: #555; font-size: 12px; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<!-- fiche d'un autre onglet, cachée : ne doit pas être lue -->
+<div class="record hidden">
+  <records-highlights2><h1 class="slds-page-header__title"><lightning-formatted-name>M. Paul ANCIEN</lightning-formatted-name></h1></records-highlights2>
+</div>
+<div class="record">
+  <records-highlights2><h1 class="slds-page-header__title"><lightning-formatted-name>Jeanne DUPONT</lightning-formatted-name></h1></records-highlights2>
+  <records-record-layout-item><div class="slds-form-element"><span class="slds-form-element__label">Civilité</span>
+  <div class="slds-form-element__control">Mme</div></div></records-record-layout-item>
+  <records-record-layout-item><div class="slds-form-element"><span class="slds-form-element__label">Société</span>
+  <div class="slds-form-element__control">Exemple SARL</div></div></records-record-layout-item>
+</div>
+</body>
+</html>
